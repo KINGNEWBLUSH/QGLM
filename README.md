@@ -1,4 +1,4 @@
-# TeaQuestLM
+# QGLM
 
 problem_generate.py: code for generating problem using TeaQesLM
 
