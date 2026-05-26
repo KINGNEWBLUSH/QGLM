@@ -1,5 +1,9 @@
 from utils import generage_agents
+from utils.tools import load_jsonl
 import re
+
+
+REFERENCE_QUESTIONS = load_jsonl("PATH_TO_REFERENCE_QUESTIONS.jsonl")
 
 CHECK_SOLVABLE_PROMPT = """你是一位命题教师，请你首先尝试求解下面这道由AI生成的题目，然后判断:题目是否可解，是否存在设计错误
 输入的题目是:{input_quesiton}
@@ -88,8 +92,8 @@ def knowledge_coverage(records, target):
 
 def RQD(sbert, record, reference):
     # print(reference['knowledge'])
-    exemplar_problems = generate_agents.reference_get_k(
-        reference["knowledge"], reference_data=generate_agents.reference_data, k=10
+    exemplar_problems = generage_agents.reference_get_k(
+        reference["knowledge"], reference_data=generage_agents.reference_data, k=10
     )
     for question in REFERENCE_QUESTIONS:
         if question in exemplar_problems:
@@ -103,7 +107,7 @@ def RQD(sbert, record, reference):
     return max(simi_scores), max_score_reference_question
 
 
-def complexity(records):
+def reasoning_length(records):
     length = []
     for record in records:
         try:
